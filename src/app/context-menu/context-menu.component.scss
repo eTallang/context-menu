@@ -1,0 +1,24 @@
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+.transparent-backdrop {
+  background-color: transparent;
+}
+
+.context-menu-panel {
+  position: absolute;
+  padding: 16px 32px;
+  background: white;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.15);
+
+  .context-menu-item {
+    background: none;
+    border: none;
+    display: block;
+    letter-spacing: .4px;
+    height: 30px;
+
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+}
