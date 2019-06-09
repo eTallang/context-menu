@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { ContextMenuService } from './context-menu/context-menu.service';
 
 @Component({
@@ -6,16 +7,20 @@ import { ContextMenuService } from './context-menu/context-menu.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'context-menu';
+export class AppComponent {
+  selectedItem: string;
 
-  constructor(private contextMenuService: ContextMenuService) { }
+  constructor(private contextMenuService: ContextMenuService) {}
 
-  ngOnInit() {
-    this.contextMenuService.triggerOn('contextmenu', [
-      'Call',
-      'Message',
-      'View profile'
-    ]);
+  openMenu(event: MouseEvent): void {
+    this.contextMenuService
+      .open(event, ['Call', 'Message', 'View profile'])
+      .subscribe(selectedItem => (this.selectedItem = selectedItem));
+  }
+
+  openOtherMenu(event: MouseEvent): void {
+    this.contextMenuService
+      .open(event, ['Other menu'])
+      .subscribe(selectedItem => (this.selectedItem = selectedItem));
   }
 }

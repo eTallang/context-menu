@@ -1,3 +1,5 @@
-<button class="context-menu-item" *ngFor="let menuItem of menuItems">
-  {{ menuItem }}
-</button>
+<div class="context-menu-panel" @height>
+  <button class="context-menu-item" *ngFor="let menuItem of menuItems" (click)="menuClick(menuItem)">
+    {{ menuItem }}
+  </button>
+</div>
