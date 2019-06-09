@@ -6,8 +6,8 @@ export const height = trigger('height', [
   state(
     'void',
     style({
-      transform: 'scale(.8)',
-      opacity: '0.5',
+      transform: 'scale(.9)',
+      opacity: '0.3',
       overflow: 'hidden'
     })
   ),

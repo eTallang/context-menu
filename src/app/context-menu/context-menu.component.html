@@ -1,5 +1,5 @@
 <div class="context-menu-panel" @height>
-  <button class="context-menu-item" *ngFor="let menuItem of menuItems" (click)="menuClick(menuItem)">
+  <button class="context-menu-item" matRippleColor="rgba(0, 0, 0, .07)" matRipple *ngFor="let menuItem of menuItems" (click)="menuClick(menuItem)">
     {{ menuItem }}
   </button>
 </div>

@@ -5,17 +5,18 @@
 }
 
 .context-menu-panel {
-  transform-origin: top left;
+  transform-origin: center center;
+  border-radius: 4px;
   padding: 8px 0;
   background: white;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.11);
 
   .context-menu-item {
     background: none;
     border: none;
     display: block;
     letter-spacing: 0.4px;
-    height: 40px;
+    height: 48px;
     padding: 0 32px;
     white-space: nowrap;
     width: 100%;
