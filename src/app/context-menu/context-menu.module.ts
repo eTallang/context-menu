@@ -6,9 +6,7 @@ import { ContextMenuComponent } from './context-menu.component';
 
 @NgModule({
   declarations: [ContextMenuComponent],
-  imports: [
-    CommonModule,
-    OverlayModule
-  ]
+  imports: [CommonModule, OverlayModule],
+  entryComponents: [ContextMenuComponent]
 })
-export class ContextMenuModule { }
+export class ContextMenuModule {}
