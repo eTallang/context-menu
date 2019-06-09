@@ -24,7 +24,8 @@ export class ContextMenuService {
     event.preventDefault();
     this.overlayRef = this.overlay.create({
       hasBackdrop: true,
-      backdropClass: 'transparent-backdrop'
+      backdropClass: 'transparent-backdrop',
+      scrollStrategy: this.overlay.scrollStrategies.close()
     });
 
     this.overlayRef.updatePositionStrategy(this.getCursorPosition(event));
