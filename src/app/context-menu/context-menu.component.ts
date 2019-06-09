@@ -1,14 +1,14 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { listAnimation } from './animations';
+import { height, listAnimation } from './animations';
 
 @Component({
   selector: 'app-context-menu',
   templateUrl: './context-menu.component.html',
   styleUrls: ['./context-menu.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: [ listAnimation ]
+  animations: [ height, listAnimation ]
 })
 export class ContextMenuComponent {
   private detatch = new Subject<string>();
