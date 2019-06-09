@@ -6,7 +6,10 @@ import { take, tap } from 'rxjs/operators';
 
 import { ContextMenuComponent } from './context-menu.component';
 
-type ContextMenuTrigger = 'contextmenu';
+export interface MenuItem {
+  name: string;
+  action?: () => any;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -29,23 +32,11 @@ export class ContextMenuService {
     this.subscription.unsubscribe();
   }
 
-  triggerOn(
-    trigger: ContextMenuTrigger,
-    menuItems: string[],
-    element?: HTMLElement | Document
-  ): void {
-    this.subscription.add(
-      fromEvent(element ? element : document, trigger).subscribe((event: MouseEvent) => {
-        this.attachContextMenu(event, menuItems);
-      })
-    );
-  }
-
-  open(event: MouseEvent, menuItems: string[]): Observable<string> {
+  open(event: MouseEvent, menuItems: MenuItem[]): Observable<MenuItem> {
     return this.attachContextMenu(event, menuItems);
   }
 
-  private attachContextMenu(event: MouseEvent, menuItems: string[]): Observable<string> {
+  private attachContextMenu(event: MouseEvent, menuItems: MenuItem[]): Observable<MenuItem> {
     event.preventDefault();
     this.overlayRef.detach();
     this.overlayRef.updatePositionStrategy(this.getCursorPosition(event));

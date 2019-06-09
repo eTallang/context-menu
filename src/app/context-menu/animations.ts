@@ -1,6 +1,6 @@
 import { trigger, state, style, transition, animate, query, stagger } from '@angular/animations';
 
-export const height = trigger('height', [
+export const panelScale = trigger('panelScale', [
   state(
     'void',
     style({
@@ -20,7 +20,7 @@ export const height = trigger('height', [
   transition('void <=> *', animate('180ms cubic-bezier(.4, 0, .1, 1)'))
 ]);
 
-export const listAnimation = trigger('listAnimation', [
+export const listStagger = trigger('listStagger', [
   transition('* => *', [
     query(
       ':enter',

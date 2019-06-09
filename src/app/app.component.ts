@@ -14,13 +14,21 @@ export class AppComponent {
 
   openMenu(event: MouseEvent): void {
     this.contextMenuService
-      .open(event, ['Call', 'Message', 'View profile'])
-      .subscribe(selectedItem => (this.selectedItem = selectedItem));
+      .open(event, [
+        { name: 'Call', action: () => alert('Hei du') },
+        { name: 'Message' },
+        { name: 'View profile' },
+        { name: 'Delete request' },
+        { name: 'Block user' },
+        { name: 'Edit alias' },
+        { name: 'See all requests' }
+      ])
+      .subscribe(selectedItem => (this.selectedItem = selectedItem.name));
   }
 
   openOtherMenu(event: MouseEvent): void {
     this.contextMenuService
-      .open(event, ['Other menu'])
-      .subscribe(selectedItem => (this.selectedItem = selectedItem));
+      .open(event, [{ name: 'Other menu' }])
+      .subscribe(selectedItem => (this.selectedItem = selectedItem.name));
   }
 }
