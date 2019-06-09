@@ -36,7 +36,9 @@ export class ContextMenuService {
     const componentRef = this.overlayRef.attach(portal);
     const contextMenuComp = componentRef.instance;
     contextMenuComp.initContextMenu(menuItems, this.overlayRef);
-    return contextMenuComp.detach$.pipe(tap(() => this.overlayRef.detach()));
+    return contextMenuComp.detach$.pipe(tap(() => {
+      this.overlayRef.detach()
+    }));
   }
 
   private getCursorPosition(event: MouseEvent) {
