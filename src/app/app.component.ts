@@ -23,12 +23,12 @@ export class AppComponent {
         { name: 'Edit alias' },
         { name: 'See all requests' }
       ])
-      .subscribe(selectedItem => (this.selectedItem = selectedItem.name));
+      .subscribe(selectedItem => (this.selectedItem = selectedItem ? selectedItem.name : null));
   }
 
   openOtherMenu(event: MouseEvent): void {
     this.contextMenuService
       .open(event, [{ name: 'Other menu' }])
-      .subscribe(selectedItem => (this.selectedItem = selectedItem.name));
+      .subscribe(selectedItem => (this.selectedItem = selectedItem ? selectedItem.name : null));
   }
 }

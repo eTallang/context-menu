@@ -10,6 +10,12 @@
   padding: 8px 0;
   background: white;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.11);
+  max-height: 400px;
+  overflow-y: hidden;
+
+  &:hover, &:focus-within {
+    overflow-y: auto;
+  }
 
   .context-menu-item {
     background: none;
@@ -21,6 +27,7 @@
     white-space: nowrap;
     width: 100%;
     text-align: left;
+    outline: none;
 
     &:not(:disabled) {
       cursor: pointer;

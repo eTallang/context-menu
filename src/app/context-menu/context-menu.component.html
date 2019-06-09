@@ -1,5 +1,17 @@
-<div class="context-menu-panel" @panelScale [@listStagger]="menuItems.length" >
-  <button class="context-menu-item" matRippleColor="rgba(0, 0, 0, .07)" matRipple *ngFor="let menuItem of menuItems" (click)="menuClick(menuItem)">
+<div
+  class="context-menu-panel"
+  [@panelScale]="animationState"
+  (@panelScale.done)="closePanel()"
+  [@listStagger]="menuItems.length"
+>
+  <button
+    cdkMonitorElementFocus
+    class="context-menu-item"
+    matRippleColor="rgba(0, 0, 0, .07)"
+    matRipple
+    *ngFor="let menuItem of menuItems"
+    (click)="menuClick(menuItem)"
+  >
     {{ menuItem.name }}
   </button>
 </div>
