@@ -22,8 +22,7 @@ export const panelScale = trigger('panelScale', [
         style({ opacity: 1, transform: 'scale(1)', offset: 1 })
       ])
     )
-  ),
-  transition('* => void', animate('160ms cubic-bezier(.4, 0, .1, 1)', style({ opacity: 0, transform: 'scale(1.08)' })))
+  )
 ]);
 
 export const listStagger = trigger('listStagger', [

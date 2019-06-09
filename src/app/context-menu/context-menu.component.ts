@@ -1,7 +1,12 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, fromEvent, Observable } from 'rxjs';
+import { takeUntil, tap, filter } from 'rxjs/operators';
 
 import { panelScale, listStagger } from './animations';
 import { MenuItem } from './context-menu.service';
@@ -11,7 +16,8 @@ import { MenuItem } from './context-menu.service';
   templateUrl: './context-menu.component.html',
   styleUrls: ['./context-menu.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: [ panelScale, listStagger ]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [panelScale, listStagger]
 })
 export class ContextMenuComponent {
   private detatch = new Subject<MenuItem>();
@@ -21,13 +27,17 @@ export class ContextMenuComponent {
   detach$ = this.detatch.asObservable();
   menuItems: MenuItem[] = [];
 
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+
   initContextMenu(menuItems: MenuItem[], overlayRef: OverlayRef): void {
     this.menuItems = menuItems;
     this.overlayRef = overlayRef;
-    // fromEvent(this.overlayRef.backdropElement, 'contextmenu')
-    //   .pipe(takeUntil(this.destroyed))
-    //   .subscribe(() => this.overlayRef.detach());
-    this.overlayRef.backdropClick().pipe(takeUntil(this.detach$)).subscribe(() => this.animationState = 'void');
+    this.menuClosingActions()
+      .pipe(takeUntil(this.detach$))
+      .subscribe(() => {
+        this.animationState = 'void';
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
   menuClick(clickedMenuItem: MenuItem): void {
@@ -43,5 +53,19 @@ export class ContextMenuComponent {
       this.detatch.next(this.clickedMenuItem);
       this.detatch.complete();
     }
+  }
+
+  private menuClosingActions(): Observable<MouseEvent> {
+    return fromEvent(this.overlayRef.backdropElement, 'mousedown').pipe(
+      filter((mouseEvent: MouseEvent) => {
+        /**
+         * Only close if is a left(1)- or right(3)-click is triggered
+         */
+        return mouseEvent.which === 1 || mouseEvent.which === 3;
+      }),
+      tap((mouseEvent: MouseEvent) => {
+        mouseEvent.preventDefault();
+      })
+    );
   }
 }

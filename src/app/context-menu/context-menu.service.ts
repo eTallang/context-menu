@@ -18,27 +18,25 @@ export interface MenuItem {
 export class ContextMenuService {
   private overlayRef: OverlayRef;
 
-  constructor(private overlay: Overlay) {
+  constructor(private overlay: Overlay) {}
+
+  open(event: MouseEvent, menuItems: MenuItem[]): Observable<MenuItem> {
+    event.preventDefault();
     this.overlayRef = this.overlay.create({
       hasBackdrop: true,
       backdropClass: 'transparent-backdrop'
     });
-  }
-
-  open(event: MouseEvent, menuItems: MenuItem[]): Observable<MenuItem> {
-    event.preventDefault();
-    if (this.overlayRef.hasAttached()) {
-      this.overlayRef.detach();
-    }
 
     this.overlayRef.updatePositionStrategy(this.getCursorPosition(event));
     const portal = new ComponentPortal(ContextMenuComponent);
     const componentRef = this.overlayRef.attach(portal);
     const contextMenuComp = componentRef.instance;
     contextMenuComp.initContextMenu(menuItems, this.overlayRef);
-    return contextMenuComp.detach$.pipe(tap(() => {
-      this.overlayRef.detach()
-    }));
+    return contextMenuComp.detach$.pipe(
+      tap(() => {
+        this.overlayRef.detach();
+      })
+    );
   }
 
   private getCursorPosition(event: MouseEvent) {
